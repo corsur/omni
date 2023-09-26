@@ -1,0 +1,11 @@
+syntax = "proto3";
+package ethstate.ethstate;
+
+option go_package = "ethState/x/ethstate/types";
+
+message StorageSlot {
+  uint64 id = 1;
+  string address = 2; 
+  string storage = 3; 
+  string creator = 4;
+}

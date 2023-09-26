@@ -1,12 +1,17 @@
 syntax = "proto3";
+
 package ethstate.ethstate;
 
 import "gogoproto/gogo.proto";
 import "ethstate/ethstate/params.proto";
+import "ethstate/ethstate/storage_slot.proto";
 
 option go_package = "ethState/x/ethstate/types";
 
 // GenesisState defines the ethstate module's genesis state.
 message GenesisState {
-  Params params = 1 [(gogoproto.nullable) = false];
+           Params      params           = 1 [(gogoproto.nullable) = false];
+  repeated StorageSlot storageSlotList  = 2 [(gogoproto.nullable) = false];
+           uint64      storageSlotCount = 3;
 }
+

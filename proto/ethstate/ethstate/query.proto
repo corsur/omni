@@ -1,26 +1,58 @@
 syntax = "proto3";
+
 package ethstate.ethstate;
 
 import "gogoproto/gogo.proto";
 import "google/api/annotations.proto";
 import "cosmos/base/query/v1beta1/pagination.proto";
 import "ethstate/ethstate/params.proto";
+import "ethstate/ethstate/storage_slot.proto";
 
 option go_package = "ethState/x/ethstate/types";
 
 // Query defines the gRPC querier service.
 service Query {
+  
   // Parameters queries the parameters of the module.
-  rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
+  rpc Params (QueryParamsRequest) returns (QueryParamsResponse) {
     option (google.api.http).get = "/ethState/ethstate/params";
+  
+  }
+  
+  // Queries a list of StorageSlot items.
+  rpc StorageSlot    (QueryGetStorageSlotRequest) returns (QueryGetStorageSlotResponse) {
+    option (google.api.http).get = "/ethState/ethstate/storage_slot/{id}";
+  
+  }
+  rpc StorageSlotAll (QueryAllStorageSlotRequest) returns (QueryAllStorageSlotResponse) {
+    option (google.api.http).get = "/ethState/ethstate/storage_slot";
+  
   }
 }
-
 // QueryParamsRequest is request type for the Query/Params RPC method.
 message QueryParamsRequest {}
 
 // QueryParamsResponse is response type for the Query/Params RPC method.
 message QueryParamsResponse {
+  
   // params holds all the parameters of this module.
   Params params = 1 [(gogoproto.nullable) = false];
 }
+
+message QueryGetStorageSlotRequest {
+  uint64 id = 1;
+}
+
+message QueryGetStorageSlotResponse {
+  StorageSlot StorageSlot = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllStorageSlotRequest {
+  cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllStorageSlotResponse {
+  repeated StorageSlot                            StorageSlot = 1 [(gogoproto.nullable) = false];
+           cosmos.base.query.v1beta1.PageResponse pagination  = 2;
+}
+

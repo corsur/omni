@@ -19,12 +19,47 @@ func TestGenesisState_Validate(t *testing.T) {
 			valid:    true,
 		},
 		{
-			desc:     "valid genesis state",
+			desc: "valid genesis state",
 			genState: &types.GenesisState{
 
+				StorageSlotList: []types.StorageSlot{
+					{
+						Id: 0,
+					},
+					{
+						Id: 1,
+					},
+				},
+				StorageSlotCount: 2,
 				// this line is used by starport scaffolding # types/genesis/validField
 			},
 			valid: true,
+		},
+		{
+			desc: "duplicated storageSlot",
+			genState: &types.GenesisState{
+				StorageSlotList: []types.StorageSlot{
+					{
+						Id: 0,
+					},
+					{
+						Id: 0,
+					},
+				},
+			},
+			valid: false,
+		},
+		{
+			desc: "invalid storageSlot count",
+			genState: &types.GenesisState{
+				StorageSlotList: []types.StorageSlot{
+					{
+						Id: 1,
+					},
+				},
+				StorageSlotCount: 0,
+			},
+			valid: false,
 		},
 		// this line is used by starport scaffolding # types/genesis/testcase
 	}

@@ -1,7 +1,40 @@
 syntax = "proto3";
+
 package ethstate.ethstate;
+
+import "ethstate/ethstate/storage_slot.proto";
 
 option go_package = "ethState/x/ethstate/types";
 
 // Msg defines the Msg service.
-service Msg {}
+service Msg {
+  rpc CreateStorageSlot (MsgCreateStorageSlot) returns (MsgCreateStorageSlotResponse);
+  rpc UpdateStorageSlot (MsgUpdateStorageSlot) returns (MsgUpdateStorageSlotResponse);
+  rpc DeleteStorageSlot (MsgDeleteStorageSlot) returns (MsgDeleteStorageSlotResponse);
+}
+message MsgCreateStorageSlot {
+  string creator = 1;
+  string address = 2;
+  string storage = 3;
+}
+
+message MsgCreateStorageSlotResponse {
+  uint64 id = 1;
+}
+
+message MsgUpdateStorageSlot {
+  string creator = 1;
+  uint64 id      = 2;
+  string address = 3;
+  string storage = 4;
+}
+
+message MsgUpdateStorageSlotResponse {}
+
+message MsgDeleteStorageSlot {
+  string creator = 1;
+  uint64 id      = 2;
+}
+
+message MsgDeleteStorageSlotResponse {}
+

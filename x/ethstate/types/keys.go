@@ -17,3 +17,8 @@ const (
 func KeyPrefix(p string) []byte {
 	return []byte(p)
 }
+
+const (
+	StorageSlotKey      = "StorageSlot/value/"
+	StorageSlotCountKey = "StorageSlot/count/"
+)
